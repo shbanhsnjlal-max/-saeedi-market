@@ -1,46 +1,1005 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>سوبر ماركت الصعيدي</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#f6f7f9;color:#151515}
-header{background:#fff;padding:22px 18px;border-bottom:1px solid #eee;position:sticky;top:0;z-index:5}
-.wrap{max-width:900px;margin:auto}
-.brand{font-size:28px;font-weight:800}
+body{
+ margin:0;background:#f4f6f7;color:#171717;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif
+}
+header{
+ background:#fff;padding:18px 15px;position:sticky;top:0;z-index:20;
+ box-shadow:0 2px 12px #00000012
+}
+.wrap{max-width:1000px;margin:auto}
+.brand{font-size:28px;font-weight:900}
 .sub{color:#666;margin-top:5px}
-.notice{margin:28px auto;background:#fff;border-radius:20px;padding:35px 22px;text-align:center;box-shadow:0 8px 30px #0000000d}
-.icon{font-size:48px}
-.notice h1{font-size:27px;margin:12px 0}
-.notice p{font-size:17px;color:#666;line-height:1.8}
-.areas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
-.area{background:#f0f1f3;padding:10px 16px;border-radius:999px;font-weight:700}
-footer{color:#777;text-align:center;padding:25px}
+.top{
+ display:flex;justify-content:space-between;align-items:center;gap:10px
+}
+button{
+ border:0;border-radius:14px;padding:13px 17px;
+ font-size:16px;font-weight:700;cursor:pointer
+}
+.cartBtn{background:#111;color:white}
+.green{background:#159447;color:white}
+.red{background:#c62828;color:white}
+.gray{background:#e9edef}
+main{padding:20px 12px}
+.notice{
+ background:white;border-radius:24px;padding:28px 18px;
+ text-align:center;margin:20px auto;box-shadow:0 5px 25px #0000000b
+}
+.notice .icon{font-size:55px}
+.notice h1{font-size:30px;margin:12px 0}
+.notice p{font-size:18px;color:#666;line-height:1.8}
+.areas{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.area{background:#eef1f2;border-radius:30px;padding:10px 20px;font-weight:800}
+.hidden{display:none!important}
+
+.categories{
+ display:flex;gap:9px;overflow:auto;padding:8px 0 15px
+}
+.cat{
+ background:white;border:1px solid #ddd;white-space:nowrap
+}
+.cat.active{background:#111;color:#fff}
+
+.products{
+ display:grid;grid-template-columns:repeat(2,1fr);gap:12px
+}
+.card{
+ background:white;border-radius:18px;overflow:hidden;
+ box-shadow:0 3px 14px #00000010
+}
+.pic{
+ width:100%;height:150px;background:#f0f2f3;
+ display:flex;align-items:center;justify-content:center;
+ font-size:55px;overflow:hidden
+}
+.pic img{width:100%;height:100%;object-fit:cover}
+.info{padding:13px}
+.name{font-size:18px;font-weight:800}
+.weight{color:#777;margin:5px 0}
+.price{font-size:20px;font-weight:900}
+.old{text-decoration:line-through;color:#999;font-size:14px;margin-right:6px}
+.add{width:100%;margin-top:10px;background:#111;color:white}
+
+.empty{text-align:center;color:#777;padding:40px}
+
+.overlay{
+ position:fixed;inset:0;background:#0008;z-index:100;
+ display:flex;align-items:flex-end;justify-content:center
+}
+.sheet{
+ background:white;width:100%;max-width:600px;
+ max-height:92vh;overflow:auto;border-radius:25px 25px 0 0;
+ padding:20px
+}
+input,select,textarea{
+ width:100%;padding:14px;margin:6px 0 12px;
+ border:1px solid #ddd;border-radius:12px;font-size:16px;
+ background:white
+}
+label{font-weight:700}
+.row{display:flex;gap:8px}
+.row>*{flex:1}
+.total{
+ font-size:22px;font-weight:900;padding:15px 0
+}
+
+.admin{
+ max-width:1000px;margin:auto;padding:15px
+}
+.adminHead{
+ background:#111;color:white;padding:18px;border-radius:18px;
+ display:flex;justify-content:space-between;align-items:center
+}
+.adminCard{
+ background:white;margin:12px 0;padding:16px;border-radius:18px;
+ box-shadow:0 3px 15px #00000010
+}
+.productAdmin{
+ display:flex;gap:10px;align-items:center;
+ border-bottom:1px solid #eee;padding:10px 0
+}
+.productAdmin img{
+ width:60px;height:60px;object-fit:cover;border-radius:10px
+}
+.productAdmin .grow{flex:1}
+.small{font-size:13px;color:#777}
+@media(min-width:700px){
+ .products{grid-template-columns:repeat(4,1fr)}
+ .pic{height:180px}
+}
 </style>
 </head>
+
 <body>
+
+<!-- ================= الموقع ================= -->
+<div id="site">
+
 <header>
 <div class="wrap">
+<div class="top">
+<div>
 <div class="brand">🛒 سوبر ماركت الصعيدي</div>
 <div class="sub">طلبات البقالة والتوصيل</div>
+</div>
+<button class="cartBtn" onclick="openCart()">🛒 السلة <span id="cartCount">0</span></button>
+</div>
 </div>
 </header>
 
 <main class="wrap">
-<section class="notice">
+
+<!-- إغلاق الموقع -->
+<div id="closedBox" class="notice">
 <div class="icon">🛍️</div>
 <h1>الموقع مغلق مؤقتًا</h1>
-<p>نقوم حاليًا بتجهيز المنتجات والأسعار. سيصبح الموقع متاحًا للطلب بعد الانتهاء من إضافة جميع المنتجات.</p>
-<p><strong>التوصيل متاح فقط في:</strong></p>
-<div class="areas">
+<p>
+نقوم حاليًا بتجهيز المنتجات والأسعار.<br>
+سيصبح الموقع متاحًا للطلب بعد الانتهاء من إضافة جميع المنتجات.
+</p>
+<strong>التوصيل متاح فقط في:</strong>
+<div class="areas" style="margin-top:15px">
 <span class="area">الجيزة</span>
 <span class="area">البدرشين</span>
 </div>
-</section>
-</main>
+</div>
 
-<footer>سوبر ماركت الصعيدي</footer>
+<!-- المتجر -->
+<div id="shop" class="hidden">
+
+<div class="notice" style="padding:18px">
+<h2 style="margin:0">🛒 منتجاتنا</h2>
+<p style="margin:5px 0">اختر القسم والمنتج الذي تريده</p>
+</div>
+
+<div id="categories" class="categories"></div>
+
+<div id="products" class="products"></div>
+
+</div>
+</main>
+</div>
+
+
+<!-- ================= سلة المشتريات ================= -->
+<div id="cartOverlay" class="overlay hidden">
+<div class="sheet">
+
+<div class="top">
+<h2>🛒 سلة المشتريات</h2>
+<button class="gray" onclick="closeCart()">✕</button>
+</div>
+
+<div id="cartItems"></div>
+
+<div class="total">
+الإجمالي: <span id="cartTotal">0</span> جنيه
+</div>
+
+<hr>
+
+<h3>بيانات التوصيل</h3>
+
+<label>الاسم</label>
+<input id="customerName" placeholder="اكتب اسمك">
+
+<label>رقم الهاتف</label>
+<input id="customerPhone" type="tel" placeholder="01xxxxxxxxx">
+
+<label>المنطقة</label>
+<select id="customerArea">
+<option value="">اختر المنطقة</option>
+<option>الجيزة</option>
+<option>البدرشين</option>
+</select>
+
+<label>العنوان بالتفصيل</label>
+<textarea id="customerAddress" rows="3" placeholder="الشارع - العمارة - الدور - الشقة"></textarea>
+
+<label>ملاحظات</label>
+<textarea id="customerNotes" rows="2" placeholder="أي ملاحظات على الطلب"></textarea>
+
+<button class="green" style="width:100%;margin-top:5px" onclick="sendOrder()">
+📱 تأكيد الطلب عبر واتساب
+</button>
+
+</div>
+</div>
+
+
+<!-- ================= لوحة المدير ================= -->
+<div id="adminPage" class="hidden">
+
+<div class="admin">
+
+<div class="adminHead">
+<div>
+<div style="font-size:22px;font-weight:900">👑 لوحة مدير سوبر ماركت الصعيدي</div>
+<div class="small" style="color:#ccc">إدارة المنتجات والأسعار</div>
+</div>
+<button class="gray" onclick="exitAdmin()">خروج</button>
+</div>
+
+<div class="adminCard">
+
+<h2>⚙️ إعدادات الموقع</h2>
+
+<label>رقم واتساب استقبال الطلبات</label>
+<input id="adminWhatsApp" placeholder="مثال: 201xxxxxxxxx">
+
+<button class="green" onclick="saveSettings()">حفظ الإعدادات</button>
+
+<hr>
+
+<h3>حالة الموقع</h3>
+
+<div class="row">
+<button class="green" onclick="setSite(true)">🟢 فتح الموقع</button>
+<button class="red" onclick="setSite(false)">🔴 إغلاق الموقع</button>
+</div>
+
+<p id="siteStatus"></p>
+
+</div>
+
+
+<div class="adminCard">
+
+<h2>➕ إضافة منتج</h2>
+
+<label>القسم</label>
+<select id="productCategory">
+<option>ألبان ومنتجاتها</option>
+<option>معلبات</option>
+<option>مشروبات</option>
+<option>حلويات وبسكويت</option>
+<option>مكرونة وأرز</option>
+<option>زيوت وسمن</option>
+<option>منظفات</option>
+<option>مستلزمات منزلية</option>
+<option>خبز ومخبوزات</option>
+<option>بهارات وتوابل</option>
+</select>
+
+<label>اسم المنتج</label>
+<input id="productName" placeholder="مثال: أرز الضحى">
+
+<label>الوزن / الحجم</label>
+<input id="productWeight" placeholder="مثال: 1 كيلو">
+
+<div class="row">
+<div>
+<label>السعر</label>
+<input id="productPrice" type="number" placeholder="0">
+</div>
+
+<div>
+<label>السعر القديم</label>
+<input id="productOldPrice" type="number" placeholder="اختياري">
+</div>
+</div>
+
+<label>الصورة</label>
+<input id="productImage" type="file" accept="image/*">
+
+<button class="green" style="width:100%" onclick="addProduct()">
+إضافة المنتج
+</button>
+
+</div>
+
+
+<div class="adminCard">
+
+<h2>📦 المنتجات</h2>
+
+<div id="adminProducts"></div>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- ================= تسجيل المدير ================= -->
+<div id="loginOverlay" class="overlay hidden">
+<div class="sheet">
+
+<div class="top">
+<h2>🔐 دخول المدير</h2>
+<button class="gray" onclick="closeLogin()">✕</button>
+</div>
+
+<p>هذه الصفحة خاصة بمالك المتجر.</p>
+
+<label>كلمة المرور</label>
+<input id="adminPassword" type="password" placeholder="كلمة المرور">
+
+<button class="green" style="width:100%" onclick="loginAdmin()">
+دخول
+</button>
+
+<p id="loginError" style="color:#c62828"></p>
+
+</div>
+</div>
+
+
+<script>
+/* =====================================================
+   إعدادات المتجر
+===================================================== */
+
+const DEFAULT_PASSWORD = "123456";
+
+let settings = JSON.parse(localStorage.getItem("saeedi_settings") || "null");
+
+if(!settings){
+ settings = {
+   whatsapp:"",
+   open:false
+ };
+ saveSettingsData();
+}
+
+let products = JSON.parse(localStorage.getItem("saeedi_products") || "[]");
+
+let cart = JSON.parse(localStorage.getItem("saeedi_cart") || "[]");
+
+const categories = [
+ "الكل",
+ "ألبان ومنتجاتها",
+ "معلبات",
+ "مشروبات",
+ "حلويات وبسكويت",
+ "مكرونة وأرز",
+ "زيوت وسمن",
+ "منظفات",
+ "مستلزمات منزلية",
+ "خبز ومخبوزات",
+ "بهارات وتوابل"
+];
+
+/* ممنوع إضافة خضار أو فراخ */
+const blockedWords = [
+ "خضار","خضروات","فراخ","دجاج","لحوم"
+];
+
+let selectedCategory = "الكل";
+
+
+/* =====================================================
+   التخزين
+===================================================== */
+
+function saveProducts(){
+ localStorage.setItem("saeedi_products",JSON.stringify(products));
+}
+
+function saveSettingsData(){
+ localStorage.setItem("saeedi_settings",JSON.stringify(settings));
+}
+
+function saveCart(){
+ localStorage.setItem("saeedi_cart",JSON.stringify(cart));
+}
+
+
+/* =====================================================
+   الموقع
+===================================================== */
+
+function renderSite(){
+
+ if(settings.open){
+   document.getElementById("closedBox").classList.add("hidden");
+   document.getElementById("shop").classList.remove("hidden");
+   renderCategories();
+   renderProducts();
+ }else{
+   document.getElementById("closedBox").classList.remove("hidden");
+   document.getElementById("shop").classList.add("hidden");
+ }
+
+ updateCartCount();
+}
+
+
+/* =====================================================
+   الأقسام
+===================================================== */
+
+function renderCategories(){
+
+ const box = document.getElementById("categories");
+
+ box.innerHTML = categories.map(c => `
+ <button class="cat ${selectedCategory===c?'active':''}"
+ onclick="selectCategory('${c}')">${c}</button>
+ `).join("");
+}
+
+function selectCategory(category){
+ selectedCategory = category;
+ renderCategories();
+ renderProducts();
+}
+
+
+/* =====================================================
+   المنتجات
+===================================================== */
+
+function renderProducts(){
+
+ const box = document.getElementById("products");
+
+ let list = products.filter(p =>
+   selectedCategory==="الكل" || p.category===selectedCategory
+ );
+
+ if(!list.length){
+   box.innerHTML = `
+   <div class="empty" style="grid-column:1/-1">
+   لا توجد منتجات في هذا القسم حاليًا.
+   </div>`;
+   return;
+ }
+
+ box.innerHTML = list.map(p => {
+
+   let image = p.image
+     ? `<img src="${p.image}">`
+     : `🛒`;
+
+   return `
+   <div class="card">
+     <div class="pic">${image}</div>
+
+     <div class="info">
+       <div class="name">${escapeHtml(p.name)}</div>
+
+       <div class="weight">${escapeHtml(p.weight || "")}</div>
+
+       <div class="price">
+         ${p.price} جنيه
+         ${p.oldPrice ? `<span class="old">${p.oldPrice}</span>` : ""}
+       </div>
+
+       <button class="add" onclick="addToCart('${p.id}')">
+       🛒 أضف للسلة
+       </button>
+     </div>
+   </div>
+   `;
+ }).join("");
+}
+
+
+/* =====================================================
+   السلة
+===================================================== */
+
+function addToCart(id){
+
+ const p = products.find(x=>x.id===id);
+
+ if(!p)return;
+
+ let item = cart.find(x=>x.id===id);
+
+ if(item){
+   item.qty++;
+ }else{
+   cart.push({
+     id:p.id,
+     qty:1
+   });
+ }
+
+ saveCart();
+ updateCartCount();
+}
+
+function updateCartCount(){
+
+ let count = cart.reduce((sum,x)=>sum+x.qty,0);
+
+ document.getElementById("cartCount").textContent = count;
+}
+
+function openCart(){
+ renderCart();
+ document.getElementById("cartOverlay").classList.remove("hidden");
+}
+
+function closeCart(){
+ document.getElementById("cartOverlay").classList.add("hidden");
+}
+
+function renderCart(){
+
+ const box = document.getElementById("cartItems");
+
+ if(!cart.length){
+   box.innerHTML = `<div class="empty">السلة فارغة.</div>`;
+   document.getElementById("cartTotal").textContent = "0";
+   return;
+ }
+
+ let total = 0;
+
+ box.innerHTML = cart.map(item=>{
+
+   const p = products.find(x=>x.id===item.id);
+
+   if(!p)return "";
+
+   total += p.price * item.qty;
+
+   return `
+   <div style="padding:12px 0;border-bottom:1px solid #eee">
+
+     <div class="top">
+       <strong>${escapeHtml(p.name)}</strong>
+       <strong>${p.price * item.qty} جنيه</strong>
+     </div>
+
+     <div class="row" style="margin-top:8px">
+       <button class="gray" onclick="changeQty('${p.id}',-1)">−</button>
+       <button class="gray">${item.qty}</button>
+       <button class="gray" onclick="changeQty('${p.id}',1)">+</button>
+       <button class="red" onclick="removeCart('${p.id}')">حذف</button>
+     </div>
+
+   </div>
+   `;
+
+ }).join("");
+
+ document.getElementById("cartTotal").textContent = total;
+}
+
+function changeQty(id,n){
+
+ const item = cart.find(x=>x.id===id);
+
+ if(!item)return;
+
+ item.qty += n;
+
+ if(item.qty<=0){
+   cart = cart.filter(x=>x.id!==id);
+ }
+
+ saveCart();
+ renderCart();
+ updateCartCount();
+}
+
+function removeCart(id){
+
+ cart = cart.filter(x=>x.id!==id);
+
+ saveCart();
+ renderCart();
+ updateCartCount();
+}
+
+
+/* =====================================================
+   إرسال الطلب واتساب
+===================================================== */
+
+function sendOrder(){
+
+ if(!cart.length){
+   alert("السلة فارغة.");
+   return;
+ }
+
+ const name = document.getElementById("customerName").value.trim();
+ const phone = document.getElementById("customerPhone").value.trim();
+ const area = document.getElementById("customerArea").value;
+ const address = document.getElementById("customerAddress").value.trim();
+ const notes = document.getElementById("customerNotes").value.trim();
+
+ if(!name || !phone || !area || !address){
+   alert("يرجى إدخال الاسم ورقم الهاتف والمنطقة والعنوان.");
+   return;
+ }
+
+ if(!["الجيزة","البدرشين"].includes(area)){
+   alert("التوصيل متاح فقط في الجيزة والبدرشين.");
+   return;
+ }
+
+ if(!settings.whatsapp){
+   alert("رقم واتساب المتجر لم يتم إدخاله من لوحة المدير.");
+   return;
+ }
+
+ let total = 0;
+
+ let text = "🛒 *طلب جديد - سوبر ماركت الصعيدي*%0A%0A";
+
+ text += "*بيانات العميل:*%0A";
+ text += "الاسم: " + encodeURIComponent(name) + "%0A";
+ text += "الهاتف: " + encodeURIComponent(phone) + "%0A";
+ text += "المنطقة: " + encodeURIComponent(area) + "%0A";
+ text += "العنوان: " + encodeURIComponent(address) + "%0A";
+
+ if(notes){
+   text += "ملاحظات: " + encodeURIComponent(notes) + "%0A";
+ }
+
+ text += "%0A*الطلب:*%0A";
+
+ cart.forEach(item=>{
+
+   const p = products.find(x=>x.id===item.id);
+
+   if(p){
+     const line = `${p.name} - ${item.qty} × ${p.price} = ${item.qty*p.price} جنيه`;
+     text += encodeURIComponent(line) + "%0A";
+     total += item.qty*p.price;
+   }
+
+ });
+
+ text += "%0A*الإجمالي: " + total + " جنيه*";
+
+ window.open(
+   "https://wa.me/" + settings.whatsapp + "?text=" + text,
+   "_blank"
+ );
+}
+
+
+/* =====================================================
+   تسجيل المدير
+===================================================== */
+
+function openLogin(){
+ document.getElementById("loginOverlay").classList.remove("hidden");
+}
+
+function closeLogin(){
+ document.getElementById("loginOverlay").classList.add("hidden");
+}
+
+function loginAdmin(){
+
+ const pass = document.getElementById("adminPassword").value;
+
+ if(pass !== DEFAULT_PASSWORD){
+   document.getElementById("loginError").textContent =
+   "كلمة المرور غير صحيحة.";
+   return;
+ }
+
+ closeLogin();
+
+ document.getElementById("site").classList.add("hidden");
+ document.getElementById("adminPage").classList.remove("hidden");
+
+ loadAdmin();
+}
+
+
+/* =====================================================
+   فتح صفحة المدير
+   اكتب #admin في نهاية الرابط
+===================================================== */
+
+function checkAdminRoute(){
+
+ if(location.hash === "#admin"){
+   openLogin();
+ }
+}
+
+
+/* =====================================================
+   لوحة المدير
+===================================================== */
+
+function loadAdmin(){
+
+ document.getElementById("adminWhatsApp").value =
+ settings.whatsapp || "";
+
+ updateSiteStatus();
+ renderAdminProducts();
+}
+
+function saveSettings(){
+
+ settings.whatsapp =
+ document.getElementById("adminWhatsApp").value
+ .replace(/\D/g,"");
+
+ saveSettingsData();
+
+ alert("تم حفظ الإعدادات.");
+}
+
+function setSite(open){
+
+ settings.open = open;
+
+ saveSettingsData();
+
+ updateSiteStatus();
+
+ alert(open ? "تم فتح الموقع." : "تم إغلاق الموقع.");
+
+}
+
+function updateSiteStatus(){
+
+ const el = document.getElementById("siteStatus");
+
+ el.textContent = settings.open
+   ? "🟢 الموقع مفتوح للعملاء"
+   : "🔴 الموقع مغلق حاليًا";
+}
+
+
+/* =====================================================
+   إضافة منتج
+===================================================== */
+
+function addProduct(){
+
+ const category =
+ document.getElementById("productCategory").value;
+
+ const name =
+ document.getElementById("productName").value.trim();
+
+ const weight =
+ document.getElementById("productWeight").value.trim();
+
+ const price =
+ Number(document.getElementById("productPrice").value);
+
+ const oldPrice =
+ Number(document.getElementById("productOldPrice").value) || 0;
+
+ const file =
+ document.getElementById("productImage").files[0];
+
+ if(!name || !price){
+   alert("أدخل اسم المنتج والسعر.");
+   return;
+ }
+
+ const lower = name.toLowerCase();
+
+ if(blockedWords.some(word=>lower.includes(word))){
+   alert("لا يمكن إضافة الخضار أو الفراخ أو اللحوم.");
+   return;
+ }
+
+ if(file){
+
+   const reader = new FileReader();
+
+   reader.onload = function(e){
+
+     createProduct(
+       category,name,weight,price,oldPrice,e.target.result
+     );
+
+   };
+
+   reader.readAsDataURL(file);
+
+ }else{
+
+   createProduct(
+     category,name,weight,price,oldPrice,""
+   );
+
+ }
+
+}
+
+function createProduct(category,name,weight,price,oldPrice,image){
+
+ const product = {
+   id: Date.now().toString(),
+   category,
+   name,
+   weight,
+   price,
+   oldPrice,
+   image,
+   available:true
+ };
+
+ products.push(product);
+
+ saveProducts();
+
+ document.getElementById("productName").value="";
+ document.getElementById("productWeight").value="";
+ document.getElementById("productPrice").value="";
+ document.getElementById("productOldPrice").value="";
+ document.getElementById("productImage").value="";
+
+ renderAdminProducts();
+
+ alert("تمت إضافة المنتج بنجاح.");
+}
+
+
+/* =====================================================
+   منتجات المدير
+===================================================== */
+
+function renderAdminProducts(){
+
+ const box = document.getElementById("adminProducts");
+
+ if(!products.length){
+   box.innerHTML = `<div class="empty">لم تتم إضافة منتجات بعد.</div>`;
+   return;
+ }
+
+ box.innerHTML = products.map(p=>`
+
+ <div class="productAdmin">
+
+   ${
+     p.image
+     ? `<img src="${p.image}">`
+     : `<div style="width:60px;height:60px;background:#eee;border-radius:10px;display:flex;align-items:center;justify-content:center">🛒</div>`
+   }
+
+   <div class="grow">
+
+     <strong>${escapeHtml(p.name)}</strong>
+
+     <div class="small">
+       ${escapeHtml(p.category)} -
+       ${escapeHtml(p.weight || "")}
+     </div>
+
+     <div>
+       <strong>${p.price} جنيه</strong>
+       ${p.oldPrice ? `<span class="old">${p.oldPrice}</span>` : ""}
+     </div>
+
+   </div>
+
+   <button class="gray" onclick="editProduct('${p.id}')">✏️</button>
+
+   <button class="red" onclick="deleteProduct('${p.id}')">🗑️</button>
+
+ </div>
+
+ `).join("");
+}
+
+
+/* =====================================================
+   تعديل المنتج
+===================================================== */
+
+function editProduct(id){
+
+ const p = products.find(x=>x.id===id);
+
+ if(!p)return;
+
+ const name = prompt("اسم المنتج:",p.name);
+
+ if(name===null)return;
+
+ const price = prompt("السعر:",p.price);
+
+ if(price===null)return;
+
+ const weight = prompt("الوزن / الحجم:",p.weight || "");
+
+ if(weight===null)return;
+
+ p.name = name.trim();
+ p.price = Number(price) || p.price;
+ p.weight = weight.trim();
+
+ saveProducts();
+
+ renderAdminProducts();
+ renderProducts();
+
+ alert("تم تعديل المنتج.");
+}
+
+
+/* =====================================================
+   حذف المنتج
+===================================================== */
+
+function deleteProduct(id){
+
+ const p = products.find(x=>x.id===id);
+
+ if(!p)return;
+
+ if(!confirm("هل تريد حذف المنتج؟"))return;
+
+ products = products.filter(x=>x.id!==id);
+
+ cart = cart.filter(x=>x.id!==id);
+
+ saveProducts();
+ saveCart();
+
+ renderAdminProducts();
+ renderProducts();
+ updateCartCount();
+}
+
+
+/* =====================================================
+   الخروج
+===================================================== */
+
+function exitAdmin(){
+
+ document.getElementById("adminPage").classList.add("hidden");
+ document.getElementById("site").classList.remove("hidden");
+
+ location.hash="";
+
+ renderSite();
+}
+
+
+/* =====================================================
+   حماية HTML
+===================================================== */
+
+function escapeHtml(text){
+
+ return String(text || "")
+ .replace(/&/g,"&amp;")
+ .replace(/</g,"&lt;")
+ .replace(/>/g,"&gt;")
+ .replace(/"/g,"&quot;")
+ .replace(/'/g,"&#039;");
+}
+
+
+/* =====================================================
+   تشغيل
+===================================================== */
+
+renderSite();
+checkAdminRoute();
+
+window.addEventListener("hashchange",checkAdminRoute);
+
+
+/* =====================================================
+   فتح المدير من الكيبورد:
+   الرابط:
+   موقعك/#admin
+===================================================== */
+
+</script>
+
 </body>
 </html>
